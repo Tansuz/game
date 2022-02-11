@@ -1,5 +1,5 @@
 //Router
-import { Routes, Link, Route } from 'react-router-dom'
+import { Routes, Route } from 'react-router-dom'
 
 // Styling
 import './App.scss'
@@ -12,32 +12,14 @@ import Last from './pages/last/Last'
 function App() {
   return (
     <div className='App'>
-      <h1>Hello World</h1>
-      <nav>
-        <ul id='navigation'>
-          <li>
-            <Link to='/'>Home</Link>
-          </li>
-          <li>
-            <Link to='/start'>Start</Link>
-          </li>
-          <li>
-            <Link to='/last'>Last</Link>
-          </li>
-        </ul>
-      </nav>
+      <h1>Write the word game!</h1>
       <div className='AppContainer'>
         <Routes>
-          <Route exact path='/' element={<Home />} />
-          <Route path='/start' element={<Start />} />
-          <Route path='/last' element={<Last />} />
-        </Routes>
-        {/* <Routes>
-          <Route path='/home' element={<Home />} />
+          <Route exact path='/home' element={<Home name='tane' />} />
           <Route path='/start' element={<Start />} />
           <Route path='/last' element={<Last />} />
           <Route path='*' element={<Home />} />
-        </Routes> */}
+        </Routes>
       </div>
     </div>
   )

@@ -1,26 +1,53 @@
 //React
 import { useEffect, useState } from 'react'
 
+// Router
+import { useNavigate } from 'react-router-dom'
+
 //Styling
 import './Start.scss'
 
 const Start = () => {
+  const [seconds, setSeconds] = useState(30)
   const [key, setKey] = useState(undefined)
   const [birdNumber, setBirdNumber] = useState(0)
   const [bird, setBird] = useState(null)
   const [order, setOrder] = useState(0)
+  const [score, setScore] = useState(0)
+
+  const navigate = useNavigate()
+
+  const handleSend = () => {
+    const parseScore = JSON.parse(localStorage.getItem('score')) || []
+    const obj = { score: score }
+    parseScore.push(obj)
+    localStorage.setItem('score', JSON.stringify(parseScore))
+  }
+
+  useEffect(() => {
+    if (seconds > 0) {
+      setTimeout(() => setSeconds(seconds - 1), 1000)
+    } else {
+      handleSend()
+      navigate('/last')
+    }
+  })
 
   const birds = [
-    'Talitiainen',
-    'Sinitiainen',
-    'Kuusitiainen',
-    'Kirjosieppo',
-    'Leppälintu',
-    'Kottarainen',
-    'Varpunen',
-    'Pikkuvarpunen',
-    'Harmaasieppo',
-    'Tervapääsky',
+    'talitiainen',
+    'sinitiainen',
+    // 'Kuusitiainen',
+    // 'Kirjosieppo',
+    // 'Leppälintu',
+    // 'Kottarainen',
+    // 'Varpunen',
+    // 'Pikkuvarpunen',
+    // 'Harmaasieppo',
+    // 'Tervapääsky',
+    'makkara',
+    'kuormaauto',
+    'puu',
+    'silta',
   ]
 
   const changeBird = () => {
@@ -54,17 +81,15 @@ const Start = () => {
   }, [birdNumber])
 
   useEffect(() => {
-    if (bird === '') return changeBird()
+    if (bird === '') return changeBird(), setScore(score + 1)
   }, [bird])
 
   return (
     <div className='exerciseContainer1'>
-      <h2>Start</h2>
+      <h3>{seconds}</h3>
       <h1 id='h1'>{bird}</h1>
-      <h3>{key}</h3>
-      <h4>
-        {order === 0 ? 'Syötä linnun ensimmäinen kirjain!' : 'Syötä linnun viimeinen kirjain!'}
-      </h4>
+      <h4>{order === 0 ? 'Syötä sanan ensimmäinen kirjain!' : 'Syötä sanan viimeinen kirjain!'}</h4>
+      <h4>Score: {score}</h4>
     </div>
   )
 }
