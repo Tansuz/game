@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router-dom'
 import './Start.scss'
 
 const Start = () => {
-  const [seconds, setSeconds] = useState(30)
+  const [seconds, setSeconds] = useState(10)
   const [key, setKey] = useState(undefined)
   const [birdNumber, setBirdNumber] = useState(0)
   const [bird, setBird] = useState(null)
@@ -18,8 +18,13 @@ const Start = () => {
   const navigate = useNavigate()
 
   const handleSend = () => {
+    var today = new Date()
+    var date = today.getDate() + '.' + (today.getMonth() + 1) + '.' + today.getFullYear()
+    var time = today.getHours() + ':' + today.getMinutes() + ':' + today.getSeconds()
+    var dateTime = date + ' ' + time
+
     const parseScore = JSON.parse(localStorage.getItem('score')) || []
-    const obj = { score: score }
+    const obj = { score: score, date: dateTime }
     parseScore.push(obj)
     localStorage.setItem('score', JSON.stringify(parseScore))
   }
@@ -85,7 +90,7 @@ const Start = () => {
   }, [bird])
 
   return (
-    <div className='exerciseContainer1'>
+    <div className='startContainer'>
       <h3>{seconds}</h3>
       <h1 id='h1'>{bird}</h1>
       <h4>{order === 0 ? 'Syötä sanan ensimmäinen kirjain!' : 'Syötä sanan viimeinen kirjain!'}</h4>

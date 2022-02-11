@@ -11,21 +11,10 @@ import Start from './pages/start/Start'
 import Last from './pages/last/Last'
 
 function App() {
-  const particlesInit = (main) => {
-    console.log(main)
-
-    // you can initialize the tsParticles instance (main) here, adding custom shapes or presets
-  }
-
-  const particlesLoaded = (container) => {
-    console.log(container)
-  }
   return (
     <div className='App'>
       <Particles
         id='tsparticles'
-        init={particlesInit}
-        loaded={particlesLoaded}
         options={{
           autoPlay: true,
           background: {
