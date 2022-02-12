@@ -8,10 +8,10 @@ import { useNavigate } from 'react-router-dom'
 import './Start.scss'
 
 const Start = () => {
-  const [seconds, setSeconds] = useState(10)
-  const [key, setKey] = useState(undefined)
-  const [birdNumber, setBirdNumber] = useState(0)
-  const [bird, setBird] = useState(null)
+  const [seconds, setSeconds] = useState(60)
+  const [keyboard, setKeyboard] = useState(undefined)
+  const [textNumber, setTextNumber] = useState(Math.floor(Math.random() * 30))
+  const [text, setText] = useState(null)
   const [order, setOrder] = useState(0)
   const [score, setScore] = useState(0)
 
@@ -22,7 +22,6 @@ const Start = () => {
     var date = today.getDate() + '.' + (today.getMonth() + 1) + '.' + today.getFullYear()
     var time = today.getHours() + ':' + today.getMinutes() + ':' + today.getSeconds()
     var dateTime = date + ' ' + time
-
     const parseScore = JSON.parse(localStorage.getItem('score')) || []
     const obj = { score: score, date: dateTime }
     parseScore.push(obj)
@@ -38,61 +37,90 @@ const Start = () => {
     }
   })
 
-  const birds = [
-    'talitiainen',
-    'sinitiainen',
-    // 'Kuusitiainen',
-    // 'Kirjosieppo',
-    // 'Leppälintu',
-    // 'Kottarainen',
-    // 'Varpunen',
-    // 'Pikkuvarpunen',
-    // 'Harmaasieppo',
-    // 'Tervapääsky',
-    'makkara',
-    'kuormaauto',
-    'puu',
-    'silta',
+  const texts = [
+    'text',
+    'elephant',
+    'sausage',
+    'truck',
+    'tree',
+    'bridge',
+    'dog',
+    'cat',
+    'yellow',
+    'black',
+    'bottle',
+    'ball',
+    'firetruck',
+    'headphones',
+    'mouse',
+    'computer',
+    'shirt',
+    'chair',
+    'table',
+    'flower',
+    'candle',
+    'sofa',
+    'laptop',
+    'red',
+    'tv',
+    'bed',
+    'mechanic',
+    'kitchen',
+    'toilet',
+    'backpack',
   ]
 
+  const randomnumber = Math.floor(Math.random() * 30)
+
   const changeBird = () => {
-    setBirdNumber((prev) => {
-      if (prev === birds.length - 1) {
-        return 0
-      } else {
-        return prev + 1
-      }
-    })
+    if (randomnumber === textNumber) {
+      setTextNumber(textNumber + 1)
+    }
+    if (randomnumber === 30) {
+      setTextNumber(29)
+    } else {
+      setTextNumber(randomnumber)
+    }
   }
 
-  if (bird && bird.charAt(0) === key && order === 0) {
-    let remove = bird.replaceAll(key, '')
-    setBird(remove)
+  useEffect(() => {
+    document.addEventListener('keydown', logKey)
+    return () => {
+      window.removeEventListener('keydown', logKey)
+    }
+  }, [])
+
+  if (text && text.charAt(0) === keyboard && order === 0) {
+    let remove = text.replaceAll(keyboard, '')
+    setText(remove)
     setOrder(1)
   }
-  if (bird && bird.charAt(bird.length - 1) === key && order === 1) {
-    let remove = bird.replaceAll(key, '')
-    setBird(remove)
+  if (text && text.charAt(text.length - 1) === keyboard && order === 1) {
+    let remove = text.replaceAll(keyboard, '')
+    setText(remove)
     setOrder(0)
   }
 
-  window.addEventListener('keypress', (e) => {
-    setKey(e.key)
-  })
+  function logKey(e) {
+    setKeyboard(e.key)
+    return setKeyboard('')
+  }
 
   useEffect(() => {
-    setBird(birds[birdNumber])
+    setText(texts[textNumber])
     /* eslint-disable */
-  }, [birdNumber])
+  }, [textNumber])
 
   useEffect(() => {
-    if (bird === '') return changeBird(), setScore(score + 1)
-  }, [bird])
+    if (text === '' && !text) {
+      changeBird(), setScore(score + 1)
+    }
+  }, [text])
 
   return (
     <div className='startContainer'>
       <h3>{seconds}</h3>
-      <h1 id='h1'>{bird}</h1>
+      <h1 id='h1'>{text}</h1>
       <h4>{order === 0 ? 'Syötä sanan ensimmäinen kirjain!' : 'Syötä sanan viimeinen kirjain!'}</h4>
       <h4>Score: {score}</h4>
     </div>
