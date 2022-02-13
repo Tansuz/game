@@ -4,11 +4,13 @@ import { useEffect, useState } from 'react'
 // Router
 import { useNavigate } from 'react-router-dom'
 
-//Styling
+//Styling & icons
 import './Start.scss'
+import forward from './../../images/forward.svg'
+import backward from './../../images/backward.svg'
 
 const Start = () => {
-  const [seconds, setSeconds] = useState(60)
+  const [seconds, setSeconds] = useState(30)
   const [keyboard, setKeyboard] = useState(undefined)
   const [textNumber, setTextNumber] = useState(Math.floor(Math.random() * 30))
   const [text, setText] = useState(null)
@@ -18,14 +20,16 @@ const Start = () => {
   const navigate = useNavigate()
 
   const handleSend = () => {
-    var today = new Date()
-    var date = today.getDate() + '.' + (today.getMonth() + 1) + '.' + today.getFullYear()
-    var time = today.getHours() + ':' + today.getMinutes() + ':' + today.getSeconds()
-    var dateTime = date + ' ' + time
-    const parseScore = JSON.parse(localStorage.getItem('score')) || []
-    const obj = { score: score, date: dateTime }
-    parseScore.push(obj)
-    localStorage.setItem('score', JSON.stringify(parseScore))
+    if (score) {
+      var today = new Date()
+      var date = today.getDate() + '.' + (today.getMonth() + 1) + '.' + today.getFullYear()
+      var time = today.getHours() + ':' + today.getMinutes() + ':' + today.getSeconds()
+      var dateTime = date + ' ' + time
+      const parseScore = JSON.parse(localStorage.getItem('score')) || []
+      const obj = { score: score, date: dateTime }
+      parseScore.push(obj)
+      localStorage.setItem('score', JSON.stringify(parseScore))
+    }
   }
 
   useEffect(() => {
@@ -34,8 +38,10 @@ const Start = () => {
     } else {
       handleSend()
       navigate('/last')
+      return () => {}
     }
-  })
+    /* eslint-disable */
+  }, [seconds, navigate])
 
   const texts = [
     'text',
@@ -70,16 +76,12 @@ const Start = () => {
     'backpack',
   ]
 
-  const randomnumber = Math.floor(Math.random() * 30)
-
   const changeBird = () => {
-    if (randomnumber === textNumber) {
-      setTextNumber(textNumber + 1)
-    }
-    if (randomnumber === 30) {
-      setTextNumber(29)
+    let randomNumber = Math.floor(Math.random() * 30)
+    if (textNumber === randomNumber) {
+      setTextNumber(Math.floor(Math.random() * texts.length))
     } else {
-      setTextNumber(randomnumber)
+      setTextNumber(randomNumber)
     }
   }
 
@@ -113,15 +115,20 @@ const Start = () => {
 
   useEffect(() => {
     if (text === '' && !text) {
-      changeBird(), setScore(score + 1)
+      setScore(score + 1)
+      return changeBird()
     }
   }, [text])
 
   return (
     <div className='startContainer'>
-      <h3>{seconds}</h3>
+      <h3 id='seconds'>{seconds}</h3>
+      {order === 0 ? (
+        <img src={forward} className='forwardBackwardImage' alt='first' />
+      ) : (
+        <img src={backward} className='forwardBackwardImage' alt='first' />
+      )}
       <h1 id='h1'>{text}</h1>
-      <h4>{order === 0 ? 'Syötä sanan ensimmäinen kirjain!' : 'Syötä sanan viimeinen kirjain!'}</h4>
       <h4>Score: {score}</h4>
     </div>
   )

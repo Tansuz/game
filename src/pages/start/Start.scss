@@ -1,3 +1,4 @@
+@import './../../variables';
 .startContainer {
   display: flex;
   flex-direction: column;
@@ -8,23 +9,33 @@
   align-items: center;
   border-radius: 10px;
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-  justify-content: space-between;
+  justify-content: space-around;
+
+  #seconds {
+    font-size: 40px;
+    color: rgb(141, 0, 235);
+  }
 
   #h1 {
     margin: 42px 0 42px 0;
     color: #48c774;
-  }
-
-  h2 {
-    margin: 16px 0 0 0;
+    font-family: $basicText;
   }
 
   h3 {
     margin-top: 42px;
+    font-size: 30px;
+    font-family: $basicText;
   }
 
   h4 {
     text-align: center;
     margin-bottom: 16px;
+    font-family: $basicText;
+  }
+
+  .forwardBackwardImage {
+    width: 40px;
+    height: 40px;
   }
 }
