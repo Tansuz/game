@@ -40,10 +40,10 @@ const Last = () => {
       <h2>Leaderboard</h2>
       {element}
       <div className='linkContainer'>
-        <Button id='button' onClick={handleClickReset}>
+        <Button id='button' variant='secondary' onClick={handleClickReset}>
           Restart
         </Button>
-        <Button id='button' onClick={handleClickResetScore}>
+        <Button id='button' variant='outline-danger' onClick={handleClickResetScore}>
           Reset scores
         </Button>
         <Link id='link' to='/home'>

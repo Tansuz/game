@@ -1,3 +1,4 @@
+@import './../../variables';
 .lastContainer {
   display: flex;
   flex-direction: column;
@@ -13,10 +14,12 @@
 
   h2 {
     margin-top: 16px;
+    font-family: $basicText;
   }
 
   .textContainer {
     text-align: center;
+    font-family: $basicText;
   }
 
   .linkContainer {
@@ -25,9 +28,11 @@
 
     #link {
       margin-bottom: 16px;
+      font-family: $basicText;
     }
     #button {
       margin-bottom: 16px;
+      font-family: $basicText;
     }
   }
 }
