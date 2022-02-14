@@ -36,3 +36,10 @@
     }
   }
 }
+@media only screen and (max-width: 900px) {
+  .lastContainer {
+    display: none;
+    width: 100vw;
+    min-height: 100vh;
+  }
+}
