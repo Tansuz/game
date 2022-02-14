@@ -1,9 +1,13 @@
 //Router
 import { Routes, Route } from 'react-router-dom'
 
-// Styling
+// Component
+import useWindowDimensions from './component/widthHeight'
+
+// Styling && icon
 import './App.scss'
 import Particles from 'react-tsparticles'
+import sad from './images/sad.svg'
 
 // Pages
 import Home from './pages/home/Home'
@@ -11,6 +15,7 @@ import Start from './pages/start/Start'
 import Last from './pages/last/Last'
 
 function App() {
+  const { width } = useWindowDimensions()
   return (
     <div className='App'>
       <Particles
@@ -545,9 +550,15 @@ function App() {
           },
         }}
       />
-      );
       <h1>Write the word game!</h1>
       <div className='AppContainer'>
+        {width < 900 ? (
+          <div className='mobileContainer'>
+            {' '}
+            <h2>This game is not available on mobile devices!</h2>
+            <img src={sad} className='sadImage' alt='sad' />
+          </div>
+        ) : null}
         <Routes>
           <Route exact path='/home' element={<Home name='tane' />} />
           <Route path='/start' element={<Start />} />

@@ -44,3 +44,11 @@
     font-family: $basicText;
   }
 }
+
+@media only screen and (max-width: 900px) {
+  .homeContainer {
+    display: none;
+    width: 100vw;
+    min-height: 100vh;
+  }
+}
